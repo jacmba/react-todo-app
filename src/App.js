@@ -1,23 +1,38 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
+import Counter from './components/counter/Counter';
+import {FirstComponent} from './components/firstcomponent';
+import SecondComponent from './components/secondcomponent';
+import ThirdComponent from './components/thirdcomponent';
 
 function App() {
+
+  const [count, setCount] = useState(0);
+
+  const incrementCounter = inc => setCount(count + inc)
+
+  const decrementCounter = dec => setCount(count - dec)
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      My ToDo application
+      <FirstComponent />
+      <SecondComponent />
+      <ThirdComponent />
+      <div className='CounterPanel'>
+        <h1>{count}</h1>
+      </div>
+      <Counter
+        incrementCounter={incrementCounter}
+        decrementCounter={decrementCounter} />
+      <Counter
+        increment={2} 
+        incrementCounter={incrementCounter}
+        decrementCounter={decrementCounter} />
+      <Counter
+      increment={3}
+      incrementCounter={incrementCounter}
+      decrementCounter={decrementCounter} />
     </div>
   );
 }

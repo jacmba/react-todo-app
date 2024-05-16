@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  justify-content: center;
 }
 
 .App-logo {
@@ -26,6 +27,25 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.FirstComponent {
+  color: coral;
+  font-weight: bold;
+}
+
+.SecondComponent {
+  color: rgb(15, 131, 92);
+  font-weight: bolder;
+}
+
+.CounterPanel {
+  background-color: aqua;
+  border-radius: 15px;
+  max-width: fit-content;
+  padding: 20px;
+  margin: auto;
+  margin-bottom: 20px;
 }
 
 @keyframes App-logo-spin {
