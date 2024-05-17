@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 const LoginComponent = () => {
 
@@ -10,6 +11,8 @@ const LoginComponent = () => {
   const [showSuccess, setSuccess] = useState(false)
 
   const [showError, setError] = useState(false)
+
+  const navigate = useNavigate()
 
   const setUserName = evt => setState({
     username: evt.target.value,
@@ -26,6 +29,7 @@ const LoginComponent = () => {
       console.log('Sucess!')
       setSuccess(true)
       setError(false)
+      navigate('/welcome')
     } else {
       console.log('Login failed!')
       setSuccess(false)
@@ -35,8 +39,10 @@ const LoginComponent = () => {
 
   return (
     <div className="LoginComponent">
-      <SuccessMessageComponent success={showSuccess} />
-      <ErrorMessageComponent error={showError} />
+      {showSuccess && 
+        <div className="successMessage">Authenticated successfully</div>}
+      {showError &&
+        <div className="errorMessage">Authentication Failed</div>}
       <div className="LoginForm">
         <div>
           <label>User Name</label>
@@ -62,22 +68,6 @@ const LoginComponent = () => {
       </div>
     </div>
   )
-}
-
-const SuccessMessageComponent = props => {
-  if (props.success) {
-    return <div className="successMessage">Authenticated successfully</div>
-  } else {
-    return <></>
-  }
-}
-
-const ErrorMessageComponent = props => {
-  if (props.error) {
-    return <div className="errorMessage">Authentication Failed</div>
-  } else {
-    return <></>
-  }
 }
 
 export default LoginComponent
