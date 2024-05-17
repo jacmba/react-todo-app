@@ -3,24 +3,15 @@ import './TodoApp.css'
 import LoginComponent from "./login/LoginComponent"
 import WelcomeComponent from './welcome/WelcomeComponent'
 import ErrorComponent from './error/ErrorComponent'
+import LogoutComponent from './logout/LogoutComponent'
 
 const TodoApp = () => {
-
-  const loggedUser = sessionStorage.getItem('user')
-
-  const logout = () => {
-    sessionStorage.removeItem('user')
-    window.location.reload()
-  }
 
   return (
     <div className="TodoApp">
       <h1>My ToDo App!</h1>
-      {!!!!loggedUser && 
-        <button className='logoutButton' onClick={logout}>
-          Logout
-        </button>}
       <BrowserRouter>
+        <LogoutComponent />
         <Routes>
         <Route path='/' element={<LoginComponent />}></Route>
           <Route path='/login' element={<LoginComponent />}></Route>

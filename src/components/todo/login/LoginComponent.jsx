@@ -30,6 +30,7 @@ const LoginComponent = () => {
       setSuccess(true)
       setError(false)
       sessionStorage.setItem('user', username)
+      window.dispatchEvent(new Event('login'))
       navigate('/welcome')
     } else {
       console.log('Login failed!')
