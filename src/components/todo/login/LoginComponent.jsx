@@ -29,12 +29,17 @@ const LoginComponent = () => {
       console.log('Sucess!')
       setSuccess(true)
       setError(false)
+      sessionStorage.setItem('user', username)
       navigate('/welcome')
     } else {
       console.log('Login failed!')
       setSuccess(false)
       setError(true)
     }
+  }
+
+  if (sessionStorage.user) {
+    setTimeout(() => navigate('/welcome'), 100)
   }
 
   return (
