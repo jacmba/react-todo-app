@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { useAuth } from "../security/AuthContext"
 
 const LoginComponent = () => {
 
@@ -13,6 +14,8 @@ const LoginComponent = () => {
   const [showError, setError] = useState(false)
 
   const navigate = useNavigate()
+
+  const {isAuthenticated, setAuthenticated} = useAuth()
 
   const setUserName = evt => setState({
     username: evt.target.value,
@@ -30,16 +33,17 @@ const LoginComponent = () => {
       setSuccess(true)
       setError(false)
       sessionStorage.setItem('user', username)
-      window.dispatchEvent(new Event('login'))
+      setAuthenticated(true)
       navigate('/welcome')
     } else {
       console.log('Login failed!')
       setSuccess(false)
       setError(true)
+      setAuthenticated(false)
     }
   }
 
-  if (sessionStorage.user) {
+  if (isAuthenticated) {
     setTimeout(() => navigate('/welcome'), 100)
   }
 

@@ -1,24 +1,19 @@
 import { useNavigate } from "react-router-dom"
+import { useAuth } from "../security/AuthContext"
 
 const LogoutComponent = () => {
 
   const navigate = useNavigate()
 
-  let loggedUser
+  const {isAuthenticated, setAuthenticated} = useAuth()
 
   const logout = () => {
     sessionStorage.removeItem('user')
-    window.dispatchEvent(new Event('logout'))
+    setAuthenticated(false)
     navigate('/login')
   }
 
-  const readUser = () => loggedUser = sessionStorage.getItem('user')
-
-  window.addEventListener('login', readUser)
-
-  readUser()
-
-  if (!!!!loggedUser) {
+  if (isAuthenticated) {
     return ( 
       <button className='logoutButton' onClick={logout}>
         Logout

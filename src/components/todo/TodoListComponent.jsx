@@ -39,7 +39,7 @@ const TodoListComponent = () => {
           <tbody>
             {
               todos.map(todo => (
-                <tr key="{todo.id}">
+                <tr key={todo.id}>
                   <td>{todo.id}</td>
                   <td>{todo.description}</td>
                   <td>{todo.done ? 'YES' : 'NO'}</td>
