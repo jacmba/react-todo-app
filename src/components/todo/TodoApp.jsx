@@ -9,7 +9,7 @@ import TodoListComponent from './TodoListComponent'
 const TodoApp = () => {
 
   return (
-    <div className="TodoApp">
+    <div className="container">
       <h1>My ToDo App!</h1>
       <BrowserRouter>
         <LogoutComponent />

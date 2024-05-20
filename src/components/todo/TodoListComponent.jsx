@@ -27,7 +27,7 @@ const TodoListComponent = () => {
     <div className="TodoListComponent">
       <h1>Things to do</h1>
       <div>
-        <table>
+        <table className="table">
           <thead>
             <tr>
               <td>ID</td>
