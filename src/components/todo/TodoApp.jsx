@@ -4,6 +4,7 @@ import LoginComponent from "./login/LoginComponent"
 import WelcomeComponent from './welcome/WelcomeComponent'
 import ErrorComponent from './error/ErrorComponent'
 import LogoutComponent from './logout/LogoutComponent'
+import TodoListComponent from './TodoListComponent'
 
 const TodoApp = () => {
 
@@ -17,6 +18,7 @@ const TodoApp = () => {
           <Route path='/login' element={<LoginComponent />}></Route>
           <Route path='/welcome' element={<WelcomeComponent />}></Route>
           <Route path='*' element={<ErrorComponent />}></Route>
+          <Route path='/todos' element={<TodoListComponent />}></Route>
         </Routes>
       </BrowserRouter>
     </div>
