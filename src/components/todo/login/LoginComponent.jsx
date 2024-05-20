@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { Navigate, useNavigate } from "react-router-dom"
 import { useAuth } from "../security/AuthContext"
 
 const LoginComponent = () => {
@@ -15,7 +15,7 @@ const LoginComponent = () => {
 
   const navigate = useNavigate()
 
-  const {isAuthenticated, login} = useAuth()
+  const {login, isAuthenticated} = useAuth()
 
   const setUserName = evt => setState({
     username: evt.target.value,
@@ -41,7 +41,7 @@ const LoginComponent = () => {
   }
 
   if (isAuthenticated) {
-    setTimeout(() => navigate('/welcome'), 100)
+    return <Navigate to="/welcome" />
   }
 
   return (

@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 import './TodoApp.css'
 import LoginComponent from "./login/LoginComponent"
 import WelcomeComponent from './welcome/WelcomeComponent'
@@ -6,7 +6,16 @@ import ErrorComponent from './error/ErrorComponent'
 import TodoListComponent from './TodoListComponent'
 import HeaderComponent from './common/HeaderComponent'
 import FooterComponent from './common/FooterComponent'
-import AuthProvider from './security/AuthContext'
+import AuthProvider, { useAuth } from './security/AuthContext'
+
+const AuthenticatedRoute = ({children}) => {
+  const {isAuthenticated} = useAuth()
+  if (isAuthenticated) {
+    return children
+  }
+
+  return <Navigate to="/" />
+}
 
 const TodoApp = () => {
 
@@ -16,11 +25,19 @@ const TodoApp = () => {
         <BrowserRouter>
           <HeaderComponent />
           <Routes>
-          <Route path='/' element={<LoginComponent />}></Route>
-            <Route path='/login' element={<LoginComponent />}></Route>
-            <Route path='/welcome' element={<WelcomeComponent />}></Route>
-            <Route path='*' element={<ErrorComponent />}></Route>
-            <Route path='/todos' element={<TodoListComponent />}></Route>
+          <Route path='/' element={<LoginComponent />} />
+            <Route path='/login' element={<LoginComponent />} />
+            <Route path='*' element={<ErrorComponent />} />
+            <Route path='/welcome' element={
+              <AuthenticatedRoute>
+                <WelcomeComponent />
+              </AuthenticatedRoute>
+            } />
+            <Route path='/todos' element={
+              <AuthenticatedRoute>
+                <TodoListComponent />
+              </AuthenticatedRoute>
+            } />
           </Routes>
           <FooterComponent />
         </BrowserRouter>

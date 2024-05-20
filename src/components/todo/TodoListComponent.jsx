@@ -1,14 +1,4 @@
-import { useNavigate } from "react-router-dom"
-
 const TodoListComponent = () => {
-
-  const navigate = useNavigate()
-  
-  const username = sessionStorage.getItem('user')
-
-  if (!username) {
-    setTimeout(() => navigate('/login'), 100)
-  }
 
   const today = new Date()
   const targetDate = new Date(

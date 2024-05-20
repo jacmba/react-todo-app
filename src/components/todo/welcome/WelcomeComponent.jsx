@@ -1,15 +1,6 @@
-import { Link, useNavigate } from "react-router-dom"
-import { useAuth } from "../security/AuthContext"
+import { Link } from "react-router-dom"
 
 const WelcomeComponent = () => {
-
-  const navigate = useNavigate()
-  
-  const {isAuthenticated} = useAuth()
-
-  if (!isAuthenticated) {
-    setTimeout(() => navigate('/login'), 100)
-  }
 
   const username = sessionStorage.getItem('user')
 

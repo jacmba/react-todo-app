@@ -4,9 +4,11 @@ const AuthContext = createContext()
 
 const useAuth = () => useContext(AuthContext)
 
+const username = sessionStorage.getItem('user')
+
 const AuthProvider = ({children}) => {
 
-  const [isAuthenticated, setAuthenticated] = useState(false)
+  const [isAuthenticated, setAuthenticated] = useState(!!username)
 
   const login = (username, password) => {
     if (username === 'jdoe' && password === '123456') {
