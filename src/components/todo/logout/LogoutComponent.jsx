@@ -8,6 +8,7 @@ const LogoutComponent = () => {
 
   const logout = () => {
     sessionStorage.removeItem('user')
+    window.dispatchEvent(new Event('logout'))
     navigate('/login')
   }
 

@@ -34,3 +34,9 @@ button:hover {
   top: 10px;
   right: 10px;
 }
+
+footer {
+  bottom: 0;
+  position: absolute;
+  width: 90%;
+}
