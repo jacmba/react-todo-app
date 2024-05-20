@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 const WelcomeComponent = () => {
 
@@ -12,7 +12,10 @@ const WelcomeComponent = () => {
 
   return (
     <div className="Welcome">
-      Welcome {username}!
+      <h1>Welcome {username}!</h1>
+      <div>
+        <Link to="/todos">Manage your ToDos</Link>
+      </div>
     </div>
   )
 }
