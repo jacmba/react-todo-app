@@ -5,17 +5,16 @@ const LogoutComponent = () => {
 
   const navigate = useNavigate()
 
-  const {isAuthenticated, setAuthenticated} = useAuth()
+  const {isAuthenticated, logout} = useAuth()
 
-  const logout = () => {
-    sessionStorage.removeItem('user')
-    setAuthenticated(false)
+  const submit = () => {
+    logout()
     navigate('/login')
   }
 
   if (isAuthenticated) {
     return ( 
-      <button className='logoutButton' onClick={logout}>
+      <button className='logoutButton' onClick={submit}>
         Logout
       </button>
     )

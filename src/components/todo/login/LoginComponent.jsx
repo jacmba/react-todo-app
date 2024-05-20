@@ -15,7 +15,7 @@ const LoginComponent = () => {
 
   const navigate = useNavigate()
 
-  const {isAuthenticated, setAuthenticated} = useAuth()
+  const {isAuthenticated, login} = useAuth()
 
   const setUserName = evt => setState({
     username: evt.target.value,
@@ -28,18 +28,15 @@ const LoginComponent = () => {
   })
 
   const submit = () => {
-    if (username === 'jdoe' && password === '123456') {
+    if (login(username, password)) {
       console.log('Sucess!')
       setSuccess(true)
       setError(false)
-      sessionStorage.setItem('user', username)
-      setAuthenticated(true)
       navigate('/welcome')
     } else {
       console.log('Login failed!')
       setSuccess(false)
       setError(true)
-      setAuthenticated(false)
     }
   }
 
