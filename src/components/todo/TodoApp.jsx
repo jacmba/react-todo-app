@@ -7,6 +7,7 @@ import TodoListComponent from './TodoListComponent'
 import HeaderComponent from './common/HeaderComponent'
 import FooterComponent from './common/FooterComponent'
 import AuthProvider, { useAuth } from './security/AuthContext'
+import TodoComponent from './TodoComponent'
 
 const AuthenticatedRoute = ({children}) => {
   const {isAuthenticated} = useAuth()
@@ -36,6 +37,11 @@ const TodoApp = () => {
             <Route path='/todos' element={
               <AuthenticatedRoute>
                 <TodoListComponent />
+              </AuthenticatedRoute>
+            } />
+            <Route path='/todo/:id' element={
+              <AuthenticatedRoute>
+                <TodoComponent />
               </AuthenticatedRoute>
             } />
           </Routes>

@@ -15,6 +15,11 @@ export const retrieveUserTodos = async username => {
   }
 }
 
+export const retrieveSingleTodo = async (username, id) => {
+  const uri = `/users/${username}/todos/${id}`
+  return await client.get(uri)
+}
+
 export const deleteUserTodo = async (username, id) => {
   const uri = `/users/${username}/todos/${id}`
   return await client.delete(uri)

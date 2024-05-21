@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import {deleteUserTodo, retrieveUserTodos} from "./api/TodoApiService"
+import { useNavigate } from "react-router-dom"
 
 const TodoListComponent = () => {
 
@@ -22,6 +23,8 @@ const TodoListComponent = () => {
 
   const [message, setMessage] = useState(null)
 
+  const navigate = useNavigate()
+
   const refreshTodos = async () => {
     const result = await retrieveUserTodos(username)
     console.log(result)
@@ -40,6 +43,11 @@ const TodoListComponent = () => {
     }
   }
 
+  const updateTodo = id => {
+    console.log(`Update ${id}`)
+    navigate(`/todo/${id}`)
+  }
+
   useEffect(() => {
     refreshTodos()
   }, [])
@@ -56,6 +64,7 @@ const TodoListComponent = () => {
               <th>Done?</th>
               <th>Target Date</th>
               <th>Delete</th>
+              <th>Update</th>
             </tr>
           </thead>
           <tbody>
@@ -68,6 +77,10 @@ const TodoListComponent = () => {
                   <td><button className="btn btn-warning"
                     onClick={() => deleteTodo(todo.id)}>
                     Delete
+                  </button></td>
+                  <td><button className="btn btn-success"
+                    onClick={() => updateTodo(todo.id)}>
+                    Update
                   </button></td>
                 </tr>
               ))
