@@ -1,11 +1,14 @@
 import axios from "axios"
 
+const client = axios.create({
+  baseURL: 'http://localhost:8080/hello-world'
+})
+
 const retrieveHelloWorld = async username => {
-  const uri = 'http://localhost:8080/hello-world/path-variable/' +
-    username
+  const uri = `/path-variable/${username}`
 
   try  {
-    const result = await axios.get(uri)
+    const result = await client.get(uri)
     console.log(result)
     return result.data.message
   } catch (e) {
