@@ -1,3 +1,6 @@
+import { useEffect, useState } from "react"
+import retrieveUserTodos from "./api/TodoApiService"
+
 const TodoListComponent = () => {
 
   const today = new Date()
@@ -7,11 +10,25 @@ const TodoListComponent = () => {
     today.getDay()
   )
 
-  const todos = [
+  const username = sessionStorage.getItem('user')
+
+  /*const todos = [
     {id: 1, description: 'Learn AWS', done: false, targetDate},
     {id: 2, description: 'Learn FullStack', done: false, targetDate},
     {id: 3, description: 'Learn DevOps', done: false, targetDate},
-  ]
+  ]*/
+
+  const [todos, setTodos] = useState([])
+
+  const refreshTodos = async () => {
+    const result = await retrieveUserTodos(username)
+    console.log(result)
+    setTodos(result)
+  }
+
+  useEffect(() => {
+    refreshTodos()
+  }, [])
 
   return (
     <div className="TodoListComponent">
@@ -33,7 +50,7 @@ const TodoListComponent = () => {
                   <td>{todo.id}</td>
                   <td>{todo.description}</td>
                   <td>{todo.done ? 'YES' : 'NO'}</td>
-                  <td>{todo.targetDate.toDateString()}</td>
+                  <td>{todo.targetDate}</td>
                 </tr>
               ))
             }
