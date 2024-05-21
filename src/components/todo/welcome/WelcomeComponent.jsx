@@ -1,6 +1,7 @@
 import axios from "axios"
 import { useState } from "react"
 import { Link } from "react-router-dom"
+import retrieveHelloWorld from "../api/HelloWorldApiService"
 
 const WelcomeComponent = () => {
 
@@ -9,17 +10,8 @@ const WelcomeComponent = () => {
   const [message, setMessage] = useState(null)
 
   const callHelloApi = async () => {
-    const uri = 'http://localhost:8080/hello-world/path-variable/' +
-      username
-
-    try  {
-      const result = await axios.get(uri)
-      console.log(result)
-      setMessage(result.data.message)
-    } catch (e) {
-      console.error(e)
-      setMessage(null)
-    }
+    const result = await retrieveHelloWorld(username)
+    setMessage(result)
   }
 
   return (
