@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import retrieveUserTodos from "./api/TodoApiService"
+import {deleteUserTodo, retrieveUserTodos} from "./api/TodoApiService"
 
 const TodoListComponent = () => {
 
@@ -20,10 +20,24 @@ const TodoListComponent = () => {
 
   const [todos, setTodos] = useState([])
 
+  const [message, setMessage] = useState(null)
+
   const refreshTodos = async () => {
     const result = await retrieveUserTodos(username)
     console.log(result)
     setTodos(result)
+  }
+
+  const deleteTodo = async id => {
+    console.log(`Delete todo ${id}`)
+    try {
+      await deleteUserTodo(username, id)
+      refreshTodos()
+      setMessage(`ToDo ${id} successfully deleted`)
+      console.log('ToDo deleted')
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   useEffect(() => {
@@ -33,24 +47,28 @@ const TodoListComponent = () => {
   return (
     <div className="TodoListComponent">
       <h1>Things to do</h1>
-      <div>
+      {message && <div className="alert alert-warning">{message}</div>}
+      <div className="mt-5">
         <table className="table">
           <thead>
             <tr>
-              <td>ID</td>
-              <td>Description</td>
-              <td>Done?</td>
-              <td>Target Date</td>
+              <th>Description</th>
+              <th>Done?</th>
+              <th>Target Date</th>
+              <th>Delete</th>
             </tr>
           </thead>
           <tbody>
             {
               todos.map(todo => (
                 <tr key={todo.id}>
-                  <td>{todo.id}</td>
                   <td>{todo.description}</td>
                   <td>{todo.done ? 'YES' : 'NO'}</td>
                   <td>{todo.targetDate}</td>
+                  <td><button className="btn btn-warning"
+                    onClick={() => deleteTodo(todo.id)}>
+                    Delete
+                  </button></td>
                 </tr>
               ))
             }

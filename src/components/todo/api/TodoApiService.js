@@ -4,7 +4,7 @@ const client = axios.create({
   baseURL: 'http://localhost:8080'
 })
 
-const retrieveUserTodos = async username => {
+export const retrieveUserTodos = async username => {
   const uri = `/users/${username}/todos`
   try {
     const {data} = await client.get(uri)
@@ -15,4 +15,7 @@ const retrieveUserTodos = async username => {
   }
 }
 
-export default retrieveUserTodos
+export const deleteUserTodo = async (username, id) => {
+  const uri = `/users/${username}/todos/${id}`
+  return await client.delete(uri)
+}
