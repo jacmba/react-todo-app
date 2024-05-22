@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
-import { retrieveSingleTodo } from "./api/TodoApiService"
+import { useNavigate, useParams } from "react-router-dom"
+import { retrieveSingleTodo, updateTodo } from "./api/TodoApiService"
+import { Field, Form, Formik } from "formik"
 
 const TodoComponent = () => {
   
@@ -8,7 +9,11 @@ const TodoComponent = () => {
 
   const [description, setDescription] = useState('')
   
-  // const [done, setDone] = useState(false)
+  const [done, setDone] = useState(false)
+
+  const [targetDate, setTargetDate] = useState(new Date())
+
+  const navigate = useNavigate()
 
   const username = sessionStorage.getItem('user')
 
@@ -16,17 +21,64 @@ const TodoComponent = () => {
     const {data} = await retrieveSingleTodo(username, id)
     console.log(data)
     setDescription(data.description)
+    setDone(data.isDone)
+    setTargetDate(data.targetDate)
+  }
+
+  const submit = async values => {
+    const todo = {
+      id,
+      username,
+      description: values.description,
+      targetDate: new Date(values.targetDate),
+      done      
+    }
+
+    console.log(todo)
+
+    try {
+      await updateTodo(username, todo)
+      navigate('/todos')
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   useEffect(() => {
     loadTodo()
-  }, [id])
+  })
 
   return (
     <div className="container">
       <h1>Enter ToDo details</h1>
       <div>
-        <h2>{description}</h2>
+        <Formik initialValues={{description, targetDate, done}}
+          enableReinitialize="true"
+          onSubmit={submit} >
+          {
+            props =>  (
+              <Form>
+                <fieldset className="form-group" >
+                  <label>Description</label>
+                  <Field type="text"
+                    className="form-control"
+                    name="description" />
+                </fieldset>
+                <fieldset className="form-group" >
+                  <label>Target Date</label>
+                  <Field type="date"
+                    className="form-control"
+                    name="targetDate" />
+                </fieldset>
+                <div>
+                  <button className="btn btn-success" type="submit">
+                    Save
+                  </button>
+                </div>
+              </Form>
+            )
+          }
+        </Formik>
       </div>
     </div>
   )

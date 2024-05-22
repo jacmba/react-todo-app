@@ -24,3 +24,8 @@ export const deleteUserTodo = async (username, id) => {
   const uri = `/users/${username}/todos/${id}`
   return await client.delete(uri)
 }
+
+export const updateTodo = async (username, todo) => {
+  const uri = `/users/${username}/todos`
+  return await client.put(uri, todo)
+}
