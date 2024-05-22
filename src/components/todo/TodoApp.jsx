@@ -44,6 +44,11 @@ const TodoApp = () => {
                 <TodoComponent />
               </AuthenticatedRoute>
             } />
+            <Route path='/todo/new' element={
+              <AuthenticatedRoute>
+                <TodoComponent />
+              </AuthenticatedRoute>
+            } />
           </Routes>
           <FooterComponent />
         </BrowserRouter>

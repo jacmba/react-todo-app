@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
-import { retrieveSingleTodo, updateTodo } from "./api/TodoApiService"
-import { Field, Form, Formik } from "formik"
+import { createTodo, retrieveSingleTodo, updateTodo } from "./api/TodoApiService"
+import { ErrorMessage, Field, Form, Formik } from "formik"
 
 const TodoComponent = () => {
   
@@ -21,7 +21,7 @@ const TodoComponent = () => {
     const {data} = await retrieveSingleTodo(username, id)
     console.log(data)
     setDescription(data.description)
-    setDone(data.isDone)
+    setDone(!!data.isDone)
     setTargetDate(data.targetDate)
   }
 
@@ -30,23 +30,44 @@ const TodoComponent = () => {
       id,
       username,
       description: values.description,
-      targetDate: new Date(values.targetDate),
+      targetDate: values.targetDate,
       done      
     }
 
     console.log(todo)
 
+    const fTodo = id ? updateTodo : createTodo
+
     try {
-      await updateTodo(username, todo)
+      await fTodo(username, todo)
       navigate('/todos')
     } catch (e) {
       console.error(e)
     }
   }
 
+  const validate = values => {
+    const err = {}
+    console.log(values)
+
+    if (values.description.length < 5) {
+      err.description = 'Enter at least 5 characters'
+    }
+
+    if (!values.targetDate) {
+      err.targetDate = 'Enter a valid date'
+    }
+
+    return err
+  }
+
   useEffect(() => {
-    loadTodo()
+    if (id) {
+      loadTodo()
+    }
   })
+
+  const formAction = id ? 'Save' : 'Create'
 
   return (
     <div className="container">
@@ -54,10 +75,20 @@ const TodoComponent = () => {
       <div>
         <Formik initialValues={{description, targetDate, done}}
           enableReinitialize="true"
-          onSubmit={submit} >
+          onSubmit={submit}
+          validate={validate}
+          validateOnChange={false} >
           {
             props =>  (
               <Form>
+                <ErrorMessage
+                  name="description"
+                  component="div"
+                  className="alert alert-warning" />
+                <ErrorMessage
+                  name="targetDate"
+                  component="div"
+                  className="alert alert-warning" />
                 <fieldset className="form-group" >
                   <label>Description</label>
                   <Field type="text"
@@ -72,7 +103,7 @@ const TodoComponent = () => {
                 </fieldset>
                 <div>
                   <button className="btn btn-success" type="submit">
-                    Save
+                    {formAction}
                   </button>
                 </div>
               </Form>

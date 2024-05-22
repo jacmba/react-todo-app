@@ -48,6 +48,8 @@ const TodoListComponent = () => {
     navigate(`/todo/${id}`)
   }
 
+  const createTodo = () => navigate('/todo/new')
+
   useEffect(() => {
     refreshTodos()
   }, [])
@@ -78,7 +80,7 @@ const TodoListComponent = () => {
                     onClick={() => deleteTodo(todo.id)}>
                     Delete
                   </button></td>
-                  <td><button className="btn btn-success"
+                  <td><button className="btn btn-info"
                     onClick={() => updateTodo(todo.id)}>
                     Update
                   </button></td>
@@ -87,6 +89,9 @@ const TodoListComponent = () => {
             }
           </tbody>
         </table>
+        <button className="btn btn-success" onClick={createTodo}>
+          Create new ToDo
+        </button>
       </div>
     </div>
   )

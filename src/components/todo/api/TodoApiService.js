@@ -29,3 +29,8 @@ export const updateTodo = async (username, todo) => {
   const uri = `/users/${username}/todos`
   return await client.put(uri, todo)
 }
+
+export const createTodo = async (username, todo) => {
+  const uri = `/users/${username}/todos`
+  return await client.post(uri, todo)
+}
